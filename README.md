@@ -12,3 +12,14 @@ sudo systemctl enable --now mysql
 修改 MySQL bind-address
 编辑（不同系统可能位置略不同）：
 /etc/mysql/mysql.conf.d/mysqld.cnf
+
+找到/加入：
+```
+[mysqld]
+bind-address = 0.0.0.0
+```
+
+重启mysql:
+```
+sudo systemctl restart mysql
+```
