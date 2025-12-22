@@ -23,3 +23,24 @@ bind-address = 0.0.0.0
 ```
 sudo systemctl restart mysql
 ```
+
+## 创建数据库 + 创建用户 + 授权
+
+```
+sudo mysql
+```
+
+执行
+
+``` sql
+
+CREATE DATABASE IF NOT EXISTS ai_mobile_chat
+  DEFAULT CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
+
+-- 创建一个专用账号，允许从任意来源连接（最省事）
+CREATE USER IF NOT EXISTS 'ai_chat'@'%' IDENTIFIED BY '你的强密码';
+
+GRANT ALL PRIVILEGES ON ai_mobile_chat.* TO 'ai_chat'@'%';
+FLUSH PRIVILEGES;
+```
