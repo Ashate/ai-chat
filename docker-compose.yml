@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ./backend
+    container_name: ai-chat-backend
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"  # ⭐ 关键
+    environment:
+      PORT: 4000
+
+      DB_HOST: host.docker.internal
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      # 统一使用 DB_NAME（db.js 同时兼容 DB_DATABASE，避免历史配置踩坑）
+      DB_NAME: ${DB_NAME}
+      DB_DATABASE: ${DB_NAME}
+      DB_PORT: 3306
+
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY}
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      OPENAI_WEB_SEARCH: "1"
+      JWT_SECRET: ${JWT_SECRET}
+    volumes:
+      - ./backend/uploads:/app/uploads
+    ports:
+      - "4000:4000"
+
+  frontend:
+    build: ./frontend
+    container_name: ai-chat-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "8080:80"
+

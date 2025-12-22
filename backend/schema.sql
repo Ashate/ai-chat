@@ -1,0 +1,40 @@
+CREATE TABLE IF NOT EXISTS users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  password_hash VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS chat_sessions (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  title VARCHAR(255) DEFAULT '新对话',
+  model_id VARCHAR(64) DEFAULT 'openai-mini',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS messages (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  chat_id INT NOT NULL,
+  role ENUM('user','assistant','system') NOT NULL,
+  content LONGTEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (chat_id) REFERENCES chat_sessions(id) ON DELETE CASCADE
+);
+
+-- 文件上传缓存（输入框附件）
+CREATE TABLE IF NOT EXISTS uploaded_files (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  user_id BIGINT NOT NULL,
+  chat_id BIGINT NULL,
+  original_name VARCHAR(255) NOT NULL,
+  stored_name VARCHAR(255) NOT NULL,
+  mime_type VARCHAR(100) DEFAULT '',
+  size BIGINT DEFAULT 0,
+  analysis_text LONGTEXT,
+  created_at DATETIME NOT NULL,
+  INDEX idx_uploaded_files_user (user_id),
+  INDEX idx_uploaded_files_chat (chat_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
