@@ -51,3 +51,10 @@ CREATE USER IF NOT EXISTS 'ai_chat'@'172.17.%' IDENTIFIED BY '你的强密码';
 GRANT ALL PRIVILEGES ON ai_mobile_chat.* TO 'ai_chat'@'172.17.%';
 FLUSH PRIVILEGES;
 ```
+
+如果你用的是自定义 docker network，网段可能不是 172.17，需要用 docker network inspect 看实际网段再授权。
+
+## 3、初始化数据库表结构
+``` bash
+mysql -uai_chat -p ai_mobile_chat < schema.sql
+```
