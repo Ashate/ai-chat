@@ -118,6 +118,10 @@ CREATE TABLE IF NOT EXISTS uploaded_files (
 cp .env.example .env
 ```
 在.env中填入自己的APIkey和数据库信息
+使用openssl生成一个秘钥填入JWT_SECRET
+```
+openssl rand -hex 32
+```
 
 ## 5、构建项目
 ```
@@ -128,3 +132,5 @@ chmod +x run
 ```
 docker-compose up -d --build
 ```
+
+## 注:项目后端默认端口为4000，前端默认端口为8080，数据库默认端口为3306，请在防火墙放行这些端口
