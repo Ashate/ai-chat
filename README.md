@@ -58,7 +58,7 @@ FLUSH PRIVILEGES;
 
 ```
 cd backend
-mysql -uai_chat -p ai_mobile_chat < schema.sql
+mysql -u ai_chat -p ai_mobile_chat < schema.sql
 ```
 或
 直接在mysql中执行:
