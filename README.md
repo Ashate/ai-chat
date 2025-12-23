@@ -54,7 +54,14 @@ FLUSH PRIVILEGES;
 
 如果你用的是自定义 docker network，网段可能不是 172.17，需要用 docker network inspect 看实际网段再授权。
 
-## 3、初始化数据库表结构,mysql中执行:
+## 3、初始化数据库表结构
+
+```
+cd backend
+mysql -uai_chat -p ai_mobile_chat < schema.sql
+```
+或
+直接在mysql中执行:
 ``` sql
 USE ai_mobile_chat;
 
@@ -103,4 +110,21 @@ CREATE TABLE IF NOT EXISTS uploaded_files (
   INDEX idx_uploaded_files_user (user_id),
   INDEX idx_uploaded_files_chat (chat_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
+
+## 4、修改配置文件
+进入项目根目录
+```
+cp .env.example .env
+```
+在.env中填入自己的APIkey和数据库信息
+
+## 5、构建项目
+```
+chmod +x run
+./run
+```
+或者
+```
+docker-compose up -d --build
 ```
