@@ -54,7 +54,53 @@ FLUSH PRIVILEGES;
 
 如果你用的是自定义 docker network，网段可能不是 172.17，需要用 docker network inspect 看实际网段再授权。
 
-## 3、初始化数据库表结构
-``` bash
-mysql -uai_chat -p ai_mobile_chat < schema.sql
+## 3、初始化数据库表结构,mysql中执行:
+``` sql
+USE ai_mobile_chat;
+
+-- users：后端登录/注册用到 email/password_hash
+CREATE TABLE IF NOT EXISTS users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  password_hash VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- chat_sessions：会话列表用 title/model_id/updated_at
+CREATE TABLE IF NOT EXISTS chat_sessions (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  title VARCHAR(255) DEFAULT '新对话',
+  model_id VARCHAR(64) DEFAULT 'openai-mini',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  INDEX idx_chat_user_time (user_id, updated_at),
+  CONSTRAINT fk_chat_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- messages：后端会写入 user/assistant/system 三种 role
+CREATE TABLE IF NOT EXISTS messages (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  chat_id INT NOT NULL,
+  role ENUM('user','assistant','system') NOT NULL,
+  content LONGTEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_msg_chat_time (chat_id, created_at),
+  CONSTRAINT fk_msg_chat FOREIGN KEY (chat_id) REFERENCES chat_sessions(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- uploaded_files：/api/upload 写入，后端把 analysis_text 注入 system 消息
+CREATE TABLE IF NOT EXISTS uploaded_files (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  user_id BIGINT NOT NULL,
+  chat_id BIGINT NULL,
+  original_name VARCHAR(255) NOT NULL,
+  stored_name VARCHAR(255) NOT NULL,
+  mime_type VARCHAR(100) DEFAULT '',
+  size BIGINT DEFAULT 0,
+  analysis_text LONGTEXT,
+  created_at DATETIME NOT NULL,
+  INDEX idx_uploaded_files_user (user_id),
+  INDEX idx_uploaded_files_chat (chat_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
