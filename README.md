@@ -45,7 +45,7 @@ GRANT ALL PRIVILEGES ON ai_mobile_chat.* TO 'ai_chat'@'%';
 FLUSH PRIVILEGES;
 ```
 
-###（可选）更严格：只允许 Docker 默认桥接网段 Docker 默认桥接网段常见是 172.17.0.0/16。你可以这样授权：
+### （可选）更严格：只允许 Docker 默认桥接网段 Docker 默认桥接网段常见是 172.17.0.0/16。你可以这样授权：
 ``` sql
 CREATE USER IF NOT EXISTS 'ai_chat'@'172.17.%' IDENTIFIED BY '你的强密码';
 GRANT ALL PRIVILEGES ON ai_mobile_chat.* TO 'ai_chat'@'172.17.%';
