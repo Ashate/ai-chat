@@ -437,14 +437,6 @@ body {
   font-size: 12px;
 }
 
-@media (max-width: 800px) {
-  .sidebar {
-    display: none;
-  }
-  .chat-root {
-    width: 100%;
-  }
-}
 
 /* =========================
    GPT Canvas（真实覆盖式）
@@ -974,18 +966,20 @@ body {
   }
 }
 
-
 @media (max-width: 900px) {
   .sidebar {
     position: fixed;
     top: 0;
     left: 0;
     bottom: 0;
-    transform: translateX(-105%);
-    transition: transform 180ms ease;
-    z-index: 90;
     width: 82vw;
     max-width: 320px;
+
+    transform: translateX(-100%);
+    transition: transform 180ms ease;
+
+    z-index: 90;
+    background: #020617;
   }
 
   .sidebar.open {
@@ -997,16 +991,13 @@ body {
     inset: 0;
     background: rgba(0, 0, 0, 0.5);
     z-index: 80;
-    display: none;
-    pointer-events: none;
+    display: block;
   }
 
-  .sidebar-backdrop.show {
-    display: block;
-    pointer-events: auto;
+  .sidebar-backdrop:not(.show) {
+    display: none;
   }
 }
-
 
 
 /* ChatGPT-style attachments row */
