@@ -511,7 +511,7 @@ body {
   border-radius: 12px;
   padding: 8px 10px;
   font-size: 13px;
-  min-width: 160px;
+  min-width: 130px;
   width: min(420px, 46vw);
 }
 
@@ -520,7 +520,8 @@ body {
   background: rgba(15, 23, 42, 0.55);
   color: rgba(226, 232, 240, 0.95);
   border-radius: 12px;
-  padding: 8px 10px;
+  margin-top: 20px;
+  padding: 8px 5px;
   font-size: 13px;
   cursor: pointer;
   user-select: none;
@@ -1040,4 +1041,37 @@ body {
 }
 .chat-attachment-remove:hover{
   opacity: 1;
+}
+
+/* ===============================
+   FIX: Mobile Canvas Toolbar 挤压
+   只影响移动端，不影响 PC
+   =============================== */
+@media (max-width: 800px) {
+  /* 1️⃣ 右侧工具栏不允许换行，防止高度错乱 */
+  .canvas-toolbar-right {
+    flex-wrap: nowrap;
+  }
+
+  /* 2️⃣ 隐藏低频按钮，只保留核心操作
+        保留：
+        - 编辑/预览（.on）
+        - 全屏
+        - 关闭（.danger）
+  */
+  .canvas-toolbar-right .cbtn:not(.on):not(.danger):not(:nth-last-child(2)) {
+    display: none;
+  }
+
+  /* 3️⃣ 缩小按钮 padding，降低横向占用 */
+  .canvas-toolbar-right .cbtn {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+
+  /* 4️⃣ 左侧标题输入框再缩一点，给右侧让位 */
+  .canvas-title {
+    width: 34vw;
+    min-width: 110px;
+  }
 }
