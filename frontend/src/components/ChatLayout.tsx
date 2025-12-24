@@ -533,7 +533,7 @@ const removePendingFile = async (fileId: number) => {
             </button>
 
             <div className="chat-header-titles">
-              <div className="chat-header-title">AI Mobile Chat</div>
+              <div className="chat-header-title">AI Chat</div>
               <div className="chat-header-sub">
                 {currentModel.label}
                 {outputMode === 'canvas' && (
