@@ -309,16 +309,6 @@ body {
   font-size: 14px;
 }
 
-/* 移动端适配：平板及以下 */
-@media (max-width: 900px) {
-  .chat-textarea {
-    min-width: 0;        /* 允许被压缩 */
-    flex: 1 1 0%;        /* 更精确的flex定义 */
-    overflow-x: hidden;  /* 防止水平滚动 */
-    word-wrap: break-word; /* 允许单词换行 */
-  }
-}
-
 .chat-send-btn {
   white-space: nowrap;
   border: none;
