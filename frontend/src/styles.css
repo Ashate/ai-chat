@@ -734,7 +734,7 @@ body {
   cursor: default;
 }
 
-.canvas-toggle-wrap.pill-sub {
+.canvas-toggle-wrap .pill-sub {
   border: 1px solid rgba(148, 163, 184, 0.45);
   background: rgba(15, 23, 42, 0.85);
   color: #e5e7eb;
