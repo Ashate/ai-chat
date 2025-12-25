@@ -621,6 +621,7 @@ const removePendingFile = async (fileId: number) => {
           </div>
 
           <div className="chat-input-bottom">
+<div className="input-wrap">
             
 {pendingFiles.length > 0 && (
   <div className="chat-attachments">
@@ -646,6 +647,7 @@ const removePendingFile = async (fileId: number) => {
               onChange={e => setInput(e.target.value)}
               onKeyDown={onKeyDown}
             />
+            </div>
 
             <button
               className="chat-send-btn"
