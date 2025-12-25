@@ -734,6 +734,16 @@ body {
   cursor: default;
 }
 
+.pull-sub {
+  border: 1px solid rgba(148, 163, 184, 0.45);
+  background: rgba(15, 23, 42, 0.85);
+  color: #e5e7eb;
+  font-size: 12px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
 .canvas-toggle {
   position: relative;
   display: inline-flex;
