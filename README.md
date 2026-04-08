@@ -143,3 +143,25 @@ const upload = multer({
   }
 });
 ```
+
+## 使用https协议提高安全性:
+将docker-compose.yml文件中的前后端端口映射改为内网映射:
+backend:
+  ports:
+    - "4000:4000"
+
+frontend:
+  ports:
+    - "8080:80"
+
+改为:
+
+backend:
+  ports:
+    - "127.0.0.1:4000:4000"
+
+frontend:
+  ports:
+    - "127.0.0.1:8080:80"
+然后防火墙关闭4000和8080端口，Nginx添加反向代理即可。
+
