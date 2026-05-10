@@ -7,7 +7,7 @@ body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   background: #020617;
   color: #e5e7eb;
-  overflow-x: hidden;   /* 万一前面还有疏漏，强制不让横向滚动 */
+  overflow-x: hidden;   /* 强制不让横向滚动 */
 }
 
 .app-root {
